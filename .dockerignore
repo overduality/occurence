@@ -1,0 +1,9 @@
+.git
+.gitignore
+.next
+node_modules
+data/*.db*
+README.md
+AGENTS.md
+.cursorrules
+.env*.local

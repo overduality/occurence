@@ -1,0 +1,24 @@
+services:
+  occuring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: occuring
+    restart: unless-stopped
+    ports:
+      - "5555:5555"
+    environment:
+      - NODE_ENV=production
+      - PORT=5555
+      - NODE_OPTIONS=--no-warnings
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL:-http://host.docker.internal:11434}
+      - OLLAMA_MODEL=${OLLAMA_MODEL:-}
+    volumes:
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:5555/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3

@@ -1,0 +1,1107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   1. Apple Human Interface Guidelines (HIG) & Liquid Glass
+      - Functional Navigation Layer: Optical Liquid Glass
+        (refraction + high-saturation blur + top specular rim)
+      - Content Layer: High-legibility Apple thickMaterial &
+        non-stacked nested platters (no "glass-on-glass" blur)
+      - System Palette: Apple systemBlue, systemGreen,
+        systemOrange, systemRed, and Vibrancy label hierarchy
+      - Accessibility: Full @media (prefers-reduced-transparency)
+        & manual Reduce Transparency toggle support
+   ========================================================= */
+:root {
+  color-scheme: light dark;
+
+  /* Safe progressive gradient interpolation tokens (modern-web-guidance: visual-effects) */
+  --in-oklab: ;
+  --in-oklch: ;
+
+  /* Physics-based Apple spring easing via CSS linear() (modern-web-guidance: physics-based-easing) */
+  --apple-spring: linear(
+    0, 0.009 1.1%, 0.038 2.3%, 0.151 4.8%, 0.439 9.9%, 0.728 15%,
+    0.927 19.6%, 1.028 23.7%, 1.06 27.2%, 1.053 31.6%, 1.016 40.3%,
+    0.999 48.2%, 0.996 58.6%, 1
+  );
+
+  /* --- LIGHT THEME (macOS Tahoe Daylight Silver-Sky & Optical Glass) --- */
+  --bg-app-light: oklch(0.962 0.007 248);
+  --bg-sidebar-light: oklch(0.985 0.004 250 / 0.68);
+  --bg-well-light: oklch(0.935 0.008 250 / 0.66);
+  --bg-lane-light: oklch(0.975 0.005 250 / 0.54);
+  --bg-card-light: oklch(0.996 0.002 250 / 0.84);
+  --bg-platter-light: oklch(1 0 0 / 0.93);
+  --bg-hover-light: oklch(0.92 0.01 250 / 0.58);
+
+  /* Liquid Glass Functional Layer (Toolbars, Capsules, Sheets) */
+  --glass-nav-bg-light: oklch(1 0 0 / 0.56);
+  --glass-pill-bg-light: oklch(1 0 0 / 0.86);
+  --glass-sheet-bg-light: oklch(0.992 0.003 250 / 0.80);
+  --glass-rim-border-light: oklch(1 0 0 / 0.72);
+
+  /* Solid Opaque Fallbacks for Reduce Transparency */
+  --solid-card-light: oklch(1 0 0);
+  --solid-lane-light: oklch(0.955 0.005 250);
+  --solid-nav-light: oklch(0.985 0.003 250);
+
+  /* Apple Vibrancy Label Ink Hierarchy */
+  --ink-primary-light: oklch(0.175 0.012 255);
+  --ink-secondary-light: oklch(0.42 0.016 255);
+  --ink-muted-light: oklch(0.54 0.014 255);
+
+  /* Crisp Hairlines & Dividers */
+  --border-subtle-light: oklch(0.20 0.015 255 / 0.09);
+  --border-strong-light: oklch(0.20 0.015 255 / 0.18);
+
+  /* Apple HIG systemBlue (#007AFF) */
+  --accent-light: oklch(0.585 0.215 256);
+  --accent-top-light: oklch(0.635 0.205 254);
+  --accent-hover-light: oklch(0.54 0.215 256);
+  --accent-fg-light: oklch(1 0 0);
+  --accent-ink-light: oklch(0.52 0.21 256);
+  --accent-border-light: oklch(0.585 0.215 256 / 0.36);
+  --accent-soft-light: oklch(0.585 0.215 256 / 0.12);
+
+  /* Apple HIG Semantic Status Colors (systemGreen, systemOrange, systemRed) */
+  --success-ink-light: oklch(0.52 0.165 148);
+  --success-soft-light: oklch(0.62 0.17 148 / 0.13);
+  --warn-ink-light: oklch(0.54 0.155 62);
+  --warn-soft-light: oklch(0.68 0.165 65 / 0.14);
+  --danger-ink-light: oklch(0.54 0.21 27);
+  --danger-soft-light: oklch(0.58 0.21 27 / 0.12);
+
+  /* Atmospheric Wallpaper Orbs (Light) */
+  --mesh-1-light: oklch(0.89 0.055 252 / 0.58);
+  --mesh-2-light: oklch(0.91 0.045 285 / 0.45);
+  --mesh-3-light: oklch(0.94 0.030 78 / 0.42);
+
+  --scroll-thumb-light: oklch(0.65 0.01 255 / 0.45);
+  --scroll-track-light: transparent;
+
+  /* Layered Physical Depth + Top Specular Rim Highlights (Light) */
+  --shadow-liquid-island-light:
+    inset 0 1.25px 0 0 rgb(255 255 255 / 0.92),
+    inset 0 -1px 0 0 rgb(255 255 255 / 0.32),
+    0 1px 2px 0 rgb(15 23 42 / 0.05),
+    0 10px 28px -6px rgb(15 23 42 / 0.09);
+  --shadow-liquid-pill-light:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.95),
+    0 1px 3px 0 rgb(15 23 42 / 0.08),
+    0 4px 10px -2px rgb(15 23 42 / 0.06);
+  --shadow-raised-light:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.85),
+    0 1px 2px 0 rgb(15 23 42 / 0.04),
+    0 12px 32px -8px rgb(15 23 42 / 0.08);
+  --shadow-platter-light:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.90),
+    0 1px 2px 0 rgb(15 23 42 / 0.04),
+    0 4px 12px -3px rgb(15 23 42 / 0.06);
+  --shadow-platter-hover-light:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.95),
+    0 4px 10px -2px rgb(15 23 42 / 0.06),
+    0 12px 24px -6px rgb(15 23 42 / 0.10);
+  --shadow-overlay-light:
+    inset 0 1.25px 0 0 rgb(255 255 255 / 0.90),
+    inset 0 -1px 0 0 rgb(255 255 255 / 0.25),
+    0 16px 44px -10px rgb(15 23 42 / 0.18),
+    0 4px 12px -2px rgb(15 23 42 / 0.08);
+  --shadow-accent-btn-light:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.38),
+    0 2px 6px -1px oklch(0.585 0.215 256 / 0.32),
+    0 6px 14px -4px oklch(0.585 0.215 256 / 0.24);
+
+  /* --- DARK THEME (macOS Tahoe Midnight Obsidian & Luminous Rim Glass) --- */
+  --bg-app-dark: oklch(0.155 0.015 256);
+  --bg-sidebar-dark: oklch(0.215 0.015 256 / 0.64);
+  --bg-well-dark: oklch(0.18 0.014 256 / 0.65);
+  --bg-lane-dark: oklch(0.205 0.015 256 / 0.56);
+  --bg-card-dark: oklch(0.228 0.015 256 / 0.78);
+  --bg-platter-dark: oklch(0.262 0.015 256 / 0.88);
+  --bg-hover-dark: oklch(0.30 0.016 256 / 0.55);
+
+  --glass-nav-bg-dark: oklch(0.235 0.016 256 / 0.56);
+  --glass-pill-bg-dark: oklch(0.315 0.018 256 / 0.82);
+  --glass-sheet-bg-dark: oklch(0.228 0.016 256 / 0.78);
+  --glass-rim-border-dark: oklch(1 0 0 / 0.16);
+
+  --solid-card-dark: oklch(0.225 0.014 256);
+  --solid-lane-dark: oklch(0.192 0.013 256);
+  --solid-nav-dark: oklch(0.235 0.015 256);
+
+  --ink-primary-dark: oklch(0.965 0.006 255);
+  --ink-secondary-dark: oklch(0.75 0.012 255);
+  --ink-muted-dark: oklch(0.58 0.012 255);
+
+  --border-subtle-dark: oklch(1 0 0 / 0.10);
+  --border-strong-dark: oklch(1 0 0 / 0.20);
+
+  /* Apple HIG systemBlue Dark (#0A84FF) */
+  --accent-dark: oklch(0.635 0.205 255);
+  --accent-top-dark: oklch(0.685 0.195 253);
+  --accent-hover-dark: oklch(0.67 0.195 255);
+  --accent-fg-dark: oklch(1 0 0);
+  --accent-ink-dark: oklch(0.74 0.165 253);
+  --accent-border-dark: oklch(0.635 0.205 255 / 0.45);
+  --accent-soft-dark: oklch(0.635 0.205 255 / 0.18);
+
+  --success-ink-dark: oklch(0.76 0.17 150);
+  --success-soft-dark: oklch(0.68 0.17 150 / 0.18);
+  --warn-ink-dark: oklch(0.79 0.16 68);
+  --warn-soft-dark: oklch(0.72 0.16 68 / 0.18);
+  --danger-ink-dark: oklch(0.72 0.195 26);
+  --danger-soft-dark: oklch(0.64 0.20 26 / 0.18);
+
+  /* Atmospheric Wallpaper Orbs (Dark) */
+  --mesh-1-dark: oklch(0.26 0.072 256 / 0.52);
+  --mesh-2-dark: oklch(0.23 0.058 288 / 0.40);
+  --mesh-3-dark: oklch(0.23 0.044 212 / 0.32);
+
+  --scroll-thumb-dark: oklch(0.52 0.014 256 / 0.5);
+  --scroll-track-dark: transparent;
+
+  /* Layered Physical Depth + Top Specular Rim Highlights (Dark) */
+  --shadow-liquid-island-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.26),
+    inset 0 -1px 0 0 rgb(255 255 255 / 0.06),
+    0 2px 6px 0 rgb(0 0 0 / 0.28),
+    0 14px 32px -8px rgb(0 0 0 / 0.45);
+  --shadow-liquid-pill-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.28),
+    0 2px 6px 0 rgb(0 0 0 / 0.32);
+  --shadow-raised-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.16),
+    0 2px 6px 0 rgb(0 0 0 / 0.26),
+    0 18px 40px -10px rgb(0 0 0 / 0.46);
+  --shadow-platter-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.12),
+    0 2px 6px 0 rgb(0 0 0 / 0.24);
+  --shadow-platter-hover-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.22),
+    0 8px 20px -4px rgb(0 0 0 / 0.42);
+  --shadow-overlay-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.24),
+    inset 0 -1px 0 0 rgb(255 255 255 / 0.06),
+    0 22px 54px -12px rgb(0 0 0 / 0.65),
+    0 6px 16px -2px rgb(0 0 0 / 0.38);
+  --shadow-accent-btn-dark:
+    inset 0 1px 0 0 rgb(255 255 255 / 0.34),
+    0 2px 8px -1px oklch(0.635 0.205 255 / 0.38),
+    0 8px 18px -4px rgb(0 0 0 / 0.40);
+
+  /* --- DEFAULT ACTIVE TOKENS (LIGHT) --- */
+  --bg-app: var(--bg-app-light);
+  --bg-sidebar: var(--bg-sidebar-light);
+  --bg-well: var(--bg-well-light);
+  --bg-lane: var(--bg-lane-light);
+  --bg-card: var(--bg-card-light);
+  --bg-platter: var(--bg-platter-light);
+  --bg-hover: var(--bg-hover-light);
+  --glass-nav-bg: var(--glass-nav-bg-light);
+  --glass-pill-bg: var(--glass-pill-bg-light);
+  --glass-sheet-bg: var(--glass-sheet-bg-light);
+  --glass-rim-border: var(--glass-rim-border-light);
+  --solid-card: var(--solid-card-light);
+  --solid-lane: var(--solid-lane-light);
+  --solid-nav: var(--solid-nav-light);
+  --ink-primary: var(--ink-primary-light);
+  --ink-secondary: var(--ink-secondary-light);
+  --ink-muted: var(--ink-muted-light);
+  --border-subtle: var(--border-subtle-light);
+  --border-strong: var(--border-strong-light);
+  --accent: var(--accent-light);
+  --accent-top: var(--accent-top-light);
+  --accent-hover: var(--accent-hover-light);
+  --accent-fg: var(--accent-fg-light);
+  --accent-ink: var(--accent-ink-light);
+  --accent-border: var(--accent-border-light);
+  --accent-soft: var(--accent-soft-light);
+  --success-ink: var(--success-ink-light);
+  --success-soft: var(--success-soft-light);
+  --warn-ink: var(--warn-ink-light);
+  --warn-soft: var(--warn-soft-light);
+  --danger-ink: var(--danger-ink-light);
+  --danger-soft: var(--danger-soft-light);
+  --mesh-1: var(--mesh-1-light);
+  --mesh-2: var(--mesh-2-light);
+  --mesh-3: var(--mesh-3-light);
+  --scroll-thumb: var(--scroll-thumb-light);
+  --scroll-track: var(--scroll-track-light);
+  --shadow-liquid-island: var(--shadow-liquid-island-light);
+  --shadow-liquid-pill: var(--shadow-liquid-pill-light);
+  --shadow-raised: var(--shadow-raised-light);
+  --shadow-platter: var(--shadow-platter-light);
+  --shadow-platter-hover: var(--shadow-platter-hover-light);
+  --shadow-overlay: var(--shadow-overlay-light);
+  --shadow-accent-btn: var(--shadow-accent-btn-light);
+
+  @media (prefers-color-scheme: dark) {
+    --bg-app: var(--bg-app-dark);
+    --bg-sidebar: var(--bg-sidebar-dark);
+    --bg-well: var(--bg-well-dark);
+    --bg-lane: var(--bg-lane-dark);
+    --bg-card: var(--bg-card-dark);
+    --bg-platter: var(--bg-platter-dark);
+    --bg-hover: var(--bg-hover-dark);
+    --glass-nav-bg: var(--glass-nav-bg-dark);
+    --glass-pill-bg: var(--glass-pill-bg-dark);
+    --glass-sheet-bg: var(--glass-sheet-bg-dark);
+    --glass-rim-border: var(--glass-rim-border-dark);
+    --solid-card: var(--solid-card-dark);
+    --solid-lane: var(--solid-lane-dark);
+    --solid-nav: var(--solid-nav-dark);
+    --ink-primary: var(--ink-primary-dark);
+    --ink-secondary: var(--ink-secondary-dark);
+    --ink-muted: var(--ink-muted-dark);
+    --border-subtle: var(--border-subtle-dark);
+    --border-strong: var(--border-strong-dark);
+    --accent: var(--accent-dark);
+    --accent-top: var(--accent-top-dark);
+    --accent-hover: var(--accent-hover-dark);
+    --accent-fg: var(--accent-fg-dark);
+    --accent-ink: var(--accent-ink-dark);
+    --accent-border: var(--accent-border-dark);
+    --accent-soft: var(--accent-soft-dark);
+    --success-ink: var(--success-ink-dark);
+    --success-soft: var(--success-soft-dark);
+    --warn-ink: var(--warn-ink-dark);
+    --warn-soft: var(--warn-soft-dark);
+    --danger-ink: var(--danger-ink-dark);
+    --danger-soft: var(--danger-soft-dark);
+    --mesh-1: var(--mesh-1-dark);
+    --mesh-2: var(--mesh-2-dark);
+    --mesh-3: var(--mesh-3-dark);
+    --scroll-thumb: var(--scroll-thumb-dark);
+    --scroll-track: var(--scroll-track-dark);
+    --shadow-liquid-island: var(--shadow-liquid-island-dark);
+    --shadow-liquid-pill: var(--shadow-liquid-pill-dark);
+    --shadow-raised: var(--shadow-raised-dark);
+    --shadow-platter: var(--shadow-platter-dark);
+    --shadow-platter-hover: var(--shadow-platter-hover-dark);
+    --shadow-overlay: var(--shadow-overlay-dark);
+    --shadow-accent-btn: var(--shadow-accent-btn-dark);
+  }
+
+  /* Manual theme override via <meta name="color-scheme" content="dark|light"> */
+  &:has(> head > meta[name="color-scheme"][content="dark"]) {
+    color-scheme: dark;
+  }
+
+  &:has(> head > meta[name="color-scheme"][content="light"]) {
+    color-scheme: light;
+  }
+
+  @supports not (color: light-dark(white, black)) {
+    &:has(> head > meta[name="color-scheme"][content="dark"]) {
+      --bg-app: var(--bg-app-dark);
+      --bg-sidebar: var(--bg-sidebar-dark);
+      --bg-well: var(--bg-well-dark);
+      --bg-lane: var(--bg-lane-dark);
+      --bg-card: var(--bg-card-dark);
+      --bg-platter: var(--bg-platter-dark);
+      --bg-hover: var(--bg-hover-dark);
+      --glass-nav-bg: var(--glass-nav-bg-dark);
+      --glass-pill-bg: var(--glass-pill-bg-dark);
+      --glass-sheet-bg: var(--glass-sheet-bg-dark);
+      --glass-rim-border: var(--glass-rim-border-dark);
+      --solid-card: var(--solid-card-dark);
+      --solid-lane: var(--solid-lane-dark);
+      --solid-nav: var(--solid-nav-dark);
+      --ink-primary: var(--ink-primary-dark);
+      --ink-secondary: var(--ink-secondary-dark);
+      --ink-muted: var(--ink-muted-dark);
+      --border-subtle: var(--border-subtle-dark);
+      --border-strong: var(--border-strong-dark);
+      --accent: var(--accent-dark);
+      --accent-top: var(--accent-top-dark);
+      --accent-hover: var(--accent-hover-dark);
+      --accent-fg: var(--accent-fg-dark);
+      --accent-ink: var(--accent-ink-dark);
+      --accent-border: var(--accent-border-dark);
+      --accent-soft: var(--accent-soft-dark);
+      --success-ink: var(--success-ink-dark);
+      --success-soft: var(--success-soft-dark);
+      --warn-ink: var(--warn-ink-dark);
+      --warn-soft: var(--warn-soft-dark);
+      --danger-ink: var(--danger-ink-dark);
+      --danger-soft: var(--danger-soft-dark);
+      --mesh-1: var(--mesh-1-dark);
+      --mesh-2: var(--mesh-2-dark);
+      --mesh-3: var(--mesh-3-dark);
+      --scroll-thumb: var(--scroll-thumb-dark);
+      --scroll-track: var(--scroll-track-dark);
+      --shadow-liquid-island: var(--shadow-liquid-island-dark);
+      --shadow-liquid-pill: var(--shadow-liquid-pill-dark);
+      --shadow-raised: var(--shadow-raised-dark);
+      --shadow-platter: var(--shadow-platter-dark);
+      --shadow-platter-hover: var(--shadow-platter-hover-dark);
+      --shadow-overlay: var(--shadow-overlay-dark);
+      --shadow-accent-btn: var(--shadow-accent-btn-dark);
+    }
+
+    &:has(> head > meta[name="color-scheme"][content="light"]) {
+      --bg-app: var(--bg-app-light);
+      --bg-sidebar: var(--bg-sidebar-light);
+      --bg-well: var(--bg-well-light);
+      --bg-lane: var(--bg-lane-light);
+      --bg-card: var(--bg-card-light);
+      --bg-platter: var(--bg-platter-light);
+      --bg-hover: var(--bg-hover-light);
+      --glass-nav-bg: var(--glass-nav-bg-light);
+      --glass-pill-bg: var(--glass-pill-bg-light);
+      --glass-sheet-bg: var(--glass-sheet-bg-light);
+      --glass-rim-border: var(--glass-rim-border-light);
+      --solid-card: var(--solid-card-light);
+      --solid-lane: var(--solid-lane-light);
+      --solid-nav: var(--solid-nav-light);
+      --ink-primary: var(--ink-primary-light);
+      --ink-secondary: var(--ink-secondary-light);
+      --ink-muted: var(--ink-muted-light);
+      --border-subtle: var(--border-subtle-light);
+      --border-strong: var(--border-strong-light);
+      --accent: var(--accent-light);
+      --accent-top: var(--accent-top-light);
+      --accent-hover: var(--accent-hover-light);
+      --accent-fg: var(--accent-fg-light);
+      --accent-ink: var(--accent-ink-light);
+      --accent-border: var(--accent-border-light);
+      --accent-soft: var(--accent-soft-light);
+      --success-ink: var(--success-ink-light);
+      --success-soft: var(--success-soft-light);
+      --warn-ink: var(--warn-ink-light);
+      --warn-soft: var(--warn-soft-light);
+      --danger-ink: var(--danger-ink-light);
+      --danger-soft: var(--danger-soft-light);
+      --mesh-1: var(--mesh-1-light);
+      --mesh-2: var(--mesh-2-light);
+      --mesh-3: var(--mesh-3-light);
+      --scroll-thumb: var(--scroll-thumb-light);
+      --scroll-track: var(--scroll-track-light);
+      --shadow-liquid-island: var(--shadow-liquid-island-light);
+      --shadow-liquid-pill: var(--shadow-liquid-pill-light);
+      --shadow-raised: var(--shadow-raised-light);
+      --shadow-platter: var(--shadow-platter-light);
+      --shadow-platter-hover: var(--shadow-platter-hover-light);
+      --shadow-overlay: var(--shadow-overlay-light);
+      --shadow-accent-btn: var(--shadow-accent-btn-light);
+    }
+  }
+
+  @supports (color: light-dark(white, black)) {
+    --bg-app: light-dark(var(--bg-app-light), var(--bg-app-dark));
+    --bg-sidebar: light-dark(var(--bg-sidebar-light), var(--bg-sidebar-dark));
+    --bg-well: light-dark(var(--bg-well-light), var(--bg-well-dark));
+    --bg-lane: light-dark(var(--bg-lane-light), var(--bg-lane-dark));
+    --bg-card: light-dark(var(--bg-card-light), var(--bg-card-dark));
+    --bg-platter: light-dark(var(--bg-platter-light), var(--bg-platter-dark));
+    --bg-hover: light-dark(var(--bg-hover-light), var(--bg-hover-dark));
+    --glass-nav-bg: light-dark(var(--glass-nav-bg-light), var(--glass-nav-bg-dark));
+    --glass-pill-bg: light-dark(var(--glass-pill-bg-light), var(--glass-pill-bg-dark));
+    --glass-sheet-bg: light-dark(var(--glass-sheet-bg-light), var(--glass-sheet-bg-dark));
+    --glass-rim-border: light-dark(var(--glass-rim-border-light), var(--glass-rim-border-dark));
+    --solid-card: light-dark(var(--solid-card-light), var(--solid-card-dark));
+    --solid-lane: light-dark(var(--solid-lane-light), var(--solid-lane-dark));
+    --solid-nav: light-dark(var(--solid-nav-light), var(--solid-nav-dark));
+    --ink-primary: light-dark(var(--ink-primary-light), var(--ink-primary-dark));
+    --ink-secondary: light-dark(var(--ink-secondary-light), var(--ink-secondary-dark));
+    --ink-muted: light-dark(var(--ink-muted-light), var(--ink-muted-dark));
+    --border-subtle: light-dark(var(--border-subtle-light), var(--border-subtle-dark));
+    --border-strong: light-dark(var(--border-strong-light), var(--border-strong-dark));
+    --accent: light-dark(var(--accent-light), var(--accent-dark));
+    --accent-top: light-dark(var(--accent-top-light), var(--accent-top-dark));
+    --accent-hover: light-dark(var(--accent-hover-light), var(--accent-hover-dark));
+    --accent-fg: light-dark(var(--accent-fg-light), var(--accent-fg-dark));
+    --accent-ink: light-dark(var(--accent-ink-light), var(--accent-ink-dark));
+    --accent-border: light-dark(var(--accent-border-light), var(--accent-border-dark));
+    --accent-soft: light-dark(var(--accent-soft-light), var(--accent-soft-dark));
+    --success-ink: light-dark(var(--success-ink-light), var(--success-ink-dark));
+    --success-soft: light-dark(var(--success-soft-light), var(--success-soft-dark));
+    --warn-ink: light-dark(var(--warn-ink-light), var(--warn-ink-dark));
+    --warn-soft: light-dark(var(--warn-soft-light), var(--warn-soft-dark));
+    --danger-ink: light-dark(var(--danger-ink-light), var(--danger-ink-dark));
+    --danger-soft: light-dark(var(--danger-soft-light), var(--danger-soft-dark));
+    --mesh-1: light-dark(var(--mesh-1-light), var(--mesh-1-dark));
+    --mesh-2: light-dark(var(--mesh-2-light), var(--mesh-2-dark));
+    --mesh-3: light-dark(var(--mesh-3-light), var(--mesh-3-dark));
+    --scroll-thumb: light-dark(var(--scroll-thumb-light), var(--scroll-thumb-dark));
+    --scroll-track: light-dark(var(--scroll-track-light), var(--scroll-track-dark));
+
+    &:has(> head > meta[name="color-scheme"][content="dark"]) {
+      --shadow-liquid-island: var(--shadow-liquid-island-dark);
+      --shadow-liquid-pill: var(--shadow-liquid-pill-dark);
+      --shadow-raised: var(--shadow-raised-dark);
+      --shadow-platter: var(--shadow-platter-dark);
+      --shadow-platter-hover: var(--shadow-platter-hover-dark);
+      --shadow-overlay: var(--shadow-overlay-dark);
+      --shadow-accent-btn: var(--shadow-accent-btn-dark);
+    }
+
+    &:has(> head > meta[name="color-scheme"][content="light"]) {
+      --shadow-liquid-island: var(--shadow-liquid-island-light);
+      --shadow-liquid-pill: var(--shadow-liquid-pill-light);
+      --shadow-raised: var(--shadow-raised-light);
+      --shadow-platter: var(--shadow-platter-light);
+      --shadow-platter-hover: var(--shadow-platter-hover-light);
+      --shadow-overlay: var(--shadow-overlay-light);
+      --shadow-accent-btn: var(--shadow-accent-btn-light);
+    }
+  }
+
+  @media (prefers-contrast: more) {
+    --border-subtle: var(--border-strong);
+    --ink-muted: var(--ink-secondary);
+  }
+
+  accent-color: var(--accent);
+  scrollbar-width: thin;
+  scrollbar-color: var(--scroll-thumb) var(--scroll-track);
+}
+
+@supports (background: linear-gradient(in oklab, white, black)) {
+  :root {
+    --in-oklab: in oklab;
+    --in-oklch: in oklch;
+  }
+}
+
+@media (forced-colors: active) {
+  :root {
+    --bg-app: Canvas;
+    --bg-sidebar: Canvas;
+    --bg-well: Canvas;
+    --bg-lane: Canvas;
+    --bg-card: Canvas;
+    --bg-platter: Canvas;
+    --glass-nav-bg: Canvas;
+    --glass-pill-bg: Canvas;
+    --glass-sheet-bg: Canvas;
+    --ink-primary: CanvasText;
+    --ink-secondary: CanvasText;
+    --ink-muted: GrayText;
+    --border-subtle: CanvasText;
+    --border-strong: CanvasText;
+    --glass-rim-border: CanvasText;
+    --accent: Highlight;
+    --accent-fg: HighlightText;
+    --accent-ink: Highlight;
+    --accent-border: Highlight;
+  }
+}
+
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scroll-thumb);
+    border-radius: 9999px;
+  }
+}
+
+/* =========================================================
+   1a. Apple San Francisco Typography & Form Field Auto-Fit
+   ========================================================= */
+body {
+  font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display",
+    "Inter", system-ui, sans-serif;
+  line-height: 1.5;
+  letter-spacing: -0.011em;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code,
+kbd,
+pre,
+.font-mono {
+  font-family:
+    "SF Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.heading-balance {
+  text-wrap: balance;
+  letter-spacing: -0.022em;
+}
+
+.prose-pretty {
+  text-wrap: pretty;
+  max-width: 75ch;
+}
+
+.auto-fit-textarea {
+  field-sizing: content;
+  width: 100%;
+  height: auto;
+  min-block-size: 3lh;
+  max-block-size: 14lh;
+}
+
+.auto-fit-select {
+  field-sizing: content;
+  width: auto;
+  max-inline-size: 28ch;
+}
+
+::selection {
+  background-color: var(--accent-soft);
+  color: var(--ink-primary);
+}
+
+/* =========================================================
+   1b. Apple HIG Liquid Glass & Material Hierarchy
+   ========================================================= */
+
+/* Layer 0: macOS Tahoe Atmospheric Light Canvas (interpolated in oklab) */
+.miro-canvas {
+  background-color: var(--bg-app);
+  background-image:
+    radial-gradient(ellipse 75% 55% at 14% -6% var(--in-oklab), var(--mesh-1), transparent 72%),
+    radial-gradient(ellipse 68% 52% at 88% 8% var(--in-oklab), var(--mesh-2), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 50% 105% var(--in-oklab), var(--mesh-3), transparent 74%);
+  background-attachment: fixed;
+}
+
+/* Layer 2 (Functional Navigation Layer): Apple HIG Liquid Glass Capsule / Bar
+   Uses optical saturation thickening, subtle SVG lensing refraction where supported,
+   and a physical top/bottom specular bevel highlight. */
+.miro-island {
+  isolation: isolate;
+  background-color: var(--glass-nav-bg);
+  -webkit-backdrop-filter: blur(26px) saturate(190%);
+  backdrop-filter: url(#apple-liquid-refraction) blur(24px) saturate(190%);
+  border: 1px solid var(--glass-rim-border);
+  box-shadow: var(--shadow-liquid-island);
+}
+
+/* Sliding Active Pill inside Liquid Glass Segmented Controls */
+.liquid-nav-bubble {
+  background-color: var(--glass-pill-bg);
+  border: 1px solid var(--glass-rim-border);
+  box-shadow: var(--shadow-liquid-pill);
+}
+
+/* Layer 2 (Top-Layer Sheets, Spotlight Omni-Bar & Control Center Popovers) */
+.surface-overlay {
+  isolation: isolate;
+  background-color: var(--glass-sheet-bg);
+  -webkit-backdrop-filter: blur(36px) saturate(195%);
+  backdrop-filter: blur(36px) saturate(195%);
+  border: 1px solid var(--glass-rim-border);
+  box-shadow: var(--shadow-overlay);
+}
+
+/* Layer 1 (Primary Content Sheet — Apple thickMaterial for high-contrast reading) */
+.card-elevated {
+  isolation: isolate;
+  background-color: var(--bg-card);
+  -webkit-backdrop-filter: blur(28px) saturate(175%);
+  backdrop-filter: blur(28px) saturate(175%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-raised);
+}
+
+/* Layer 1 (Grouped Lane / Sidebar Vibrancy Platter — Apple regularMaterial) */
+.miro-frame-zone {
+  isolation: isolate;
+  background-color: var(--bg-lane);
+  -webkit-backdrop-filter: blur(22px) saturate(165%);
+  backdrop-filter: blur(22px) saturate(165%);
+  border: 1px solid var(--border-subtle);
+  box-shadow: inset 0 1px 0 0 var(--glass-rim-border);
+}
+
+/* Nested Platter Cards inside Lanes — Zero stacked backdrop-filter
+   (Strictly follows Apple HIG rule against "Glass-on-Glass" blur stacking) */
+.miro-card-interactive {
+  background-color: var(--bg-platter);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-platter);
+  transition:
+    translate 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.22s ease,
+    border-color 0.16s ease;
+  transition-timing-function: var(--apple-spring), ease, ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: border-color 0.12s ease;
+  }
+}
+
+.miro-card-interactive:hover {
+  translate: 0 -2px;
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-platter-hover);
+
+  @media (prefers-reduced-motion: reduce) {
+    translate: none;
+  }
+}
+
+/* Apple HIG Tactile System Blue Glass Button */
+.apple-btn-primary {
+  background-color: var(--accent);
+  background-image: linear-gradient(
+    180deg var(--in-oklab),
+    var(--accent-top),
+    var(--accent)
+  );
+  color: var(--accent-fg);
+  box-shadow: var(--shadow-accent-btn);
+}
+
+.apple-btn-primary:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+  filter: brightness(1.04);
+}
+
+/* Physics-based Apple Tactile Control Press */
+.miro-tactile {
+  transition:
+    scale 0.32s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    filter 0.15s ease;
+  transition-timing-function: var(--apple-spring), ease, ease, ease, ease;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
+  }
+}
+
+.miro-tactile:active:not(:disabled) {
+  scale: 0.965;
+
+  @media (prefers-reduced-motion: reduce) {
+    scale: none;
+  }
+}
+
+/* =========================================================
+   1c. Apple HIG Accessibility: Reduce Transparency Fallback
+       Honors both OS @media (prefers-reduced-transparency)
+       and in-app Control Center toggle [data-reduce-transparency]
+   ========================================================= */
+@media (prefers-reduced-transparency: reduce) {
+  .miro-island,
+  .surface-overlay,
+  .card-elevated,
+  .miro-frame-zone {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .miro-island {
+    background-color: var(--solid-nav);
+    border-color: var(--border-strong);
+  }
+  .surface-overlay,
+  .card-elevated,
+  .miro-card-interactive {
+    background-color: var(--solid-card);
+    border-color: var(--border-strong);
+  }
+  .miro-frame-zone {
+    background-color: var(--solid-lane);
+    border-color: var(--border-strong);
+  }
+}
+
+html[data-reduce-transparency="true"] .miro-island,
+html[data-reduce-transparency="true"] .surface-overlay,
+html[data-reduce-transparency="true"] .card-elevated,
+html[data-reduce-transparency="true"] .miro-frame-zone {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html[data-reduce-transparency="true"] .miro-island {
+  background-color: var(--solid-nav);
+  border-color: var(--border-strong);
+}
+
+html[data-reduce-transparency="true"] .surface-overlay,
+html[data-reduce-transparency="true"] .card-elevated,
+html[data-reduce-transparency="true"] .miro-card-interactive {
+  background-color: var(--solid-card);
+  border-color: var(--border-strong);
+}
+
+html[data-reduce-transparency="true"] .miro-frame-zone {
+  background-color: var(--solid-lane);
+  border-color: var(--border-strong);
+}
+
+@keyframes miro-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-smooth {
+  animation: miro-spin 0.85s linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* =========================================================
+   1d. Spatial View Transitions (Liquid Glass Bubble & Stage)
+   ========================================================= */
+.active-nav-pill {
+  view-transition-name: active-nav-pill;
+}
+
+.workspace-stage {
+  view-transition-name: workspace-stage;
+}
+
+::view-transition-group(active-nav-pill) {
+  animation-duration: 0.34s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  animation-timing-function: var(--apple-spring);
+}
+
+::view-transition-group(workspace-stage) {
+  animation: 0.24s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slide-stage-to-left {
+  to {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.992);
+  }
+}
+
+@keyframes slide-stage-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px) scale(0.992);
+  }
+}
+
+@keyframes slide-stage-to-right {
+  to {
+    opacity: 0;
+    transform: translateX(16px) scale(0.992);
+  }
+}
+
+@keyframes slide-stage-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px) scale(0.992);
+  }
+}
+
+html:active-view-transition-type(forward)::view-transition-old(workspace-stage) {
+  animation: 0.18s cubic-bezier(0.4, 0, 1, 1) both slide-stage-to-left;
+}
+
+html:active-view-transition-type(forward)::view-transition-new(workspace-stage) {
+  animation: 0.24s cubic-bezier(0.22, 1, 0.36, 1) both slide-stage-from-right;
+}
+
+html:active-view-transition-type(backward)::view-transition-old(workspace-stage) {
+  animation: 0.18s cubic-bezier(0.4, 0, 1, 1) both slide-stage-to-right;
+}
+
+html:active-view-transition-type(backward)::view-transition-new(workspace-stage) {
+  animation: 0.24s cubic-bezier(0.22, 1, 0.36, 1) both slide-stage-from-left;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(root),
+  ::view-transition-group(active-nav-pill),
+  ::view-transition-group(workspace-stage),
+  ::view-transition-old(workspace-stage),
+  ::view-transition-new(workspace-stage) {
+    animation: none !important;
+  }
+}
+
+/* =========================================================
+   2. Native Top-Layer Overlays (<dialog> & [popover])
+      Apple Sheet Spring Entrance & Soft Optical Backdrop
+   ========================================================= */
+dialog,
+[popover] {
+  opacity: 0;
+  transform: scale(0.96) translateY(8px);
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.2s, 0.34s, 0.34s, 0.34s;
+  transition-timing-function:
+    ease-out,
+    cubic-bezier(0.22, 1, 0.36, 1),
+    ease-out,
+    ease-out;
+  transition-timing-function:
+    ease-out,
+    var(--apple-spring),
+    ease-out,
+    ease-out;
+  transition-behavior: allow-discrete;
+}
+
+dialog::backdrop,
+[popover]::backdrop {
+  background-color: rgb(10 14 24 / 0);
+  -webkit-backdrop-filter: blur(0px);
+  backdrop-filter: blur(0px);
+  transition-property: background-color, backdrop-filter, -webkit-backdrop-filter, display, overlay;
+  transition-duration: 0.22s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+
+:is(dialog[open], [popover]:where(:popover-open, .\:popover-open, .is-popover-open)):where(:not([data-closing])) {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+
+  @starting-style {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+dialog[open]:where(:not([data-closing]))::backdrop {
+  background-color: rgb(10 14 24 / 0.28);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  backdrop-filter: blur(6px) saturate(120%);
+
+  @starting-style {
+    background-color: rgb(10 14 24 / 0);
+    -webkit-backdrop-filter: blur(0px);
+    backdrop-filter: blur(0px);
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  dialog[open]:where(:not([data-closing]))::backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background-color: rgb(10 14 24 / 0.48);
+  }
+}
+
+html[data-reduce-transparency="true"] dialog[open]:where(:not([data-closing]))::backdrop {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background-color: rgb(10 14 24 / 0.48);
+}
+
+[popover].is-popover-open {
+  display: block;
+  position: fixed;
+  inset-block-start: 3.75rem;
+  inset-inline-start: 1rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog,
+  [popover] {
+    transform: none;
+    transition-duration: 0.1s;
+  }
+
+  @starting-style {
+    :is(dialog[open], [popover]:where(:popover-open, .\:popover-open, .is-popover-open)) {
+      transform: none;
+    }
+  }
+}
+
+/* =========================================================
+   3. Container Queries (@container) for Adaptive Widgets
+   ========================================================= */
+.focus-widget-container {
+  container-type: inline-size;
+  container-name: focus-hud;
+}
+
+.focus-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.focus-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.focus-extended-meta {
+  display: none;
+}
+
+@media (min-width: 680px) {
+  .focus-card-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .focus-card-actions {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .focus-extended-meta {
+    display: flex;
+  }
+}
+
+@supports (container-type: inline-size) {
+  @media (min-width: 680px) {
+    .focus-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .focus-card-actions {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .focus-extended-meta {
+      display: none;
+    }
+  }
+
+  @container focus-hud (min-width: 540px) {
+    .focus-card-header {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .focus-card-actions {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .focus-extended-meta {
+      display: flex;
+    }
+  }
+}
+
+.kanban-card-container {
+  container-type: inline-size;
+  container-name: kanban-card;
+}
+
+.kanban-card-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@container kanban-card (min-width: 230px) {
+  .kanban-card-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* =========================================================
+   4. Scoped Relational :has() Parent Styling
+   ========================================================= */
+.focus-card {
+  --callout-bg: var(--bg-well);
+  --callout-border: var(--border-subtle);
+  border-color: var(--border-subtle);
+  transition: border-color 0.15s ease;
+}
+
+.focus-card:has(.kickstart-check:checked) {
+  --callout-bg: var(--success-soft);
+  --callout-border: var(--success-ink);
+}
+
+.focus-kickstart-box {
+  background-color: var(--callout-bg);
+  border: 1px solid var(--callout-border);
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.subtask-row {
+  transition: background-color 0.14s ease;
+}
+
+.subtask-row:has(input[type="checkbox"]:checked) {
+  background-color: var(--bg-well);
+}
+
+.subtask-row:has(input[type="checkbox"]:checked) .subtask-label {
+  text-decoration: line-through;
+  color: var(--ink-muted);
+}
+
+@supports not selector(:has(*)) {
+  .focus-card.is-kickstart-done {
+    --callout-bg: var(--success-soft);
+    --callout-border: var(--success-ink);
+  }
+  .subtask-row.is-subtask-done .subtask-label {
+    text-decoration: line-through;
+    color: var(--ink-muted);
+  }
+}
+
+/* =========================================================
+   5. Accessible Form Validation (:user-valid & :user-invalid)
+   ========================================================= */
+.field-error-msg {
+  display: none;
+}
+
+.validated-input:where(:user-invalid, .user-invalid-fallback) {
+  border-color: var(--danger-ink);
+  background-color: var(--danger-soft);
+}
+
+.validated-input:where(:user-valid, .user-valid-fallback):required {
+  border-color: var(--success-ink);
+}
+
+.field-group:has(:user-invalid) .field-error-msg,
+.field-group.has-error-fallback .field-error-msg,
+.validated-input:where(:user-invalid, .user-invalid-fallback) ~ .field-error-msg {
+  display: flex;
+}
+
+.field-group:has(:user-invalid) .field-label {
+  color: var(--danger-ink);
+}
+
+/* =========================================================
+   6. Kanban Layout Containment for <16ms INP
+   ========================================================= */
+.board-column {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 300px auto 520px;
+}
+
+@supports not (content-visibility: auto) {
+  .board-column {
+    contain: layout style paint;
+  }
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .disclosure-chevron {
+  transform: rotate(90deg);
+}
