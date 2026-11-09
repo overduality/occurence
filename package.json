@@ -2,12 +2,14 @@
   "name": "occuring",
   "version": "0.2.0",
   "private": true,
+  "license": "MIT",
   "description": "Occuring — Instant-first personal focus, sprint board, and documentation workspace.",
   "scripts": {
     "dev": "next dev -p 5555",
     "build": "next build",
     "start": "next start -p 5555",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "vitest run"
   },
   "dependencies": {
     "clsx": "^2.1.1",
@@ -24,6 +26,7 @@
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.16",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^5.1.0"
   }
 }
