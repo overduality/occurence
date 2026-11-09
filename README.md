@@ -36,13 +36,13 @@ Press `G` or click **I'm Lost** when context-switching or facing cognitive fatig
 
 ```mermaid
 flowchart TD
-    User(["Developer (Keyboard / Terminal)"]) --> Omni["Omni-Bar (Cmd + K)"]
+    User["Developer (Keyboard / Terminal)"] --> Omni["Omni-Bar (Cmd + K)"]
     Omni --> TriageEngine{"Triage & Micro-Slicer"}
-    TriageEngine -->|Offline Heuristic Engine| Heuristics["Physical Verb Normalizer"]
-    TriageEngine -->|LLM Pipeline (Gemini / OpenAI / Ollama)| Slicer["Micro-Slice Pipeline"]
+    TriageEngine -->|Offline Heuristics| Heuristics["Physical Verb Normalizer"]
+    TriageEngine -->|LLM Pipeline: Gemini, OpenAI, Ollama| Slicer["Micro-Slice Pipeline"]
     Heuristics --> WAL["Node 22 node:sqlite (ACID WAL Engine)"]
     Slicer --> WAL
-    WAL --> OptimisticUI["Optimistic State Machine (<16ms INP)"]
+    WAL --> OptimisticUI["Optimistic State Machine (Sub-16ms INP)"]
     OptimisticUI --> Focus["Focus HUD (Rule of ONE)"]
     OptimisticUI --> Board["Sprint Kanban Board"]
     OptimisticUI --> Docs["Relational Markdown Docs"]
